@@ -10,15 +10,70 @@ ApplicationWindow {
     height: 480
     title: qsTr("Hello World")
 
-    DockItem {
-        id: dockItem
-        child: blueRect
+    ColumnLayout {
+        anchors.fill: parent
+        spacing: 2
 
-        Rectangle {
-            id: blueRect
-            width: 50; height: 50
-            x: 10; y: 10;
-            color: "blue"
+        RowLayout {
+            id: layout
+            spacing: 2
+
+            property var itemWidth: layout.width/layout.visibleChildren.length
+
+            DockItem {
+                id: dockItem
+                child: blueRect
+                Layout.fillWidth: layout.itemWidth
+                Layout.fillHeight: true
+                Rectangle {
+                    id: blueRect
+                    anchors.fill: parent
+                    color: "blue"
+                }
+            }
+
+            DockItem {
+                id: dockItem2
+                child: blueRect2
+                Layout.fillWidth: layout.itemWidth
+                Layout.fillHeight: true
+                
+                Rectangle {
+                    id: blueRect2
+                    anchors.fill: parent
+                    color: "red"
+                }
+            }
+        }
+        
+        RowLayout {
+            id: layout2
+            spacing: 2
+            property var itemWidth: layout.width/layout.visibleChildren.length
+            
+            DockItem {
+                id: dockItem3
+                child: blueRect3
+                Layout.fillWidth: layout.itemWidth
+                Layout.fillHeight: true
+                Rectangle {
+                    id: blueRect3
+                    anchors.fill: parent
+                    color: "green"
+                }
+            }
+            DockItem {
+                id: dockItem4
+                child: blueRect4
+                Layout.fillWidth: layout.itemWidth
+                Layout.fillHeight: true
+                
+                Rectangle {
+                    id: blueRect4
+                    anchors.fill: parent
+                    color: "pink"
+                }
+            }
         }
     }
 }
