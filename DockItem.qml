@@ -212,11 +212,17 @@ Item {
                     blueRect.y = blueRect.beginDrag.y
                     //child.x = blueRect.x
                     //child.y = blueRect.y
+                    print('>>')
                     print(blueRect.x, blueRect.y)
                     print(child.parent.parent.x, child.parent.parent.y)
+                    print(mouse.x, mouse.y)
                     var l = mapToGlobal(mouse.x, mouse.y)
-                    if(l.x < window.x || l.x > window.width ||
-                        l.y < window.y || l.y > window.height) {
+                    print(l.x, l.y)
+                    print(window.x, window.y)
+                    print(l.x < window.x, l.x > window.width,
+                        l.y < window.y, l.y > window.height)
+                    if(l.x < window.x || l.x > window.width + window.x ||
+                        l.y < window.y || l.y > window.height + window.y) {
 
                         console.log("X: " + window.x + " Y: " + window.y)
                         console.log("X: " + window.x + " Y: " + window.y)
