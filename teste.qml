@@ -21,7 +21,7 @@ ApplicationWindow {
             property var itemWidth: layout.width/layout.visibleChildren.length
 
             DockItem {
-                id: dockItem
+                id: dockItemBlue
                 child: blueRect
                 Layout.fillWidth: layout.itemWidth
                 Layout.fillHeight: true
@@ -33,43 +33,43 @@ ApplicationWindow {
             }
 
             DockItem {
-                id: dockItem2
-                child: blueRect2
+                id: dockItemRed
+                child: redRect
                 Layout.fillWidth: layout.itemWidth
                 Layout.fillHeight: true
-                
+
                 Rectangle {
-                    id: blueRect2
+                    id: redRect
                     anchors.fill: parent
                     color: "red"
                 }
             }
         }
-        
+
         RowLayout {
             id: layout2
             spacing: 2
             property var itemWidth: layout.width/layout.visibleChildren.length
-            
+
             DockItem {
-                id: dockItem3
-                child: blueRect3
+                id: dockItemGreen
+                child: greenRect
                 Layout.fillWidth: layout.itemWidth
                 Layout.fillHeight: true
                 Rectangle {
-                    id: blueRect3
+                    id: greenRect
                     anchors.fill: parent
                     color: "green"
                 }
             }
             DockItem {
-                id: dockItem4
-                child: blueRect4
+                id: dockItemPink
+                child: pinkRect
                 Layout.fillWidth: layout.itemWidth
                 Layout.fillHeight: true
-                
+
                 Rectangle {
-                    id: blueRect4
+                    id: pinkRect
                     anchors.fill: parent
                     color: "pink"
                 }
