@@ -210,8 +210,6 @@ Item {
                     print(blueRect.beginDrag)
                     blueRect.x = blueRect.beginDrag.x
                     blueRect.y = blueRect.beginDrag.y
-                    //child.x = blueRect.x
-                    //child.y = blueRect.y
                     print('>>')
                     print(blueRect.x, blueRect.y)
                     print(child.parent.parent.x, child.parent.parent.y)
@@ -231,6 +229,8 @@ Item {
                         blueRect.state = "undocked"
                         rectWindow.visible = true
                     }
+                    blueRect.x = child.x
+                    blueRect.y = child.y
 
                 }
 
