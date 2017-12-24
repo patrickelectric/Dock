@@ -10,7 +10,6 @@ Item {
     property var childParent
     Component.onCompleted: {
         childParent = child.parent
-        print(child.objectName)
     }
     Window {
         id: rectWindow
@@ -123,7 +122,6 @@ Item {
                 }
             }
         }
-
     }
 
     Item {
@@ -187,12 +185,10 @@ Item {
             }
 
             onXChanged: {
-                print(x)
                 beginDrag.x = x
             }
 
             onYChanged: {
-                print(y)
                 beginDrag.y = y
             }
 
@@ -204,26 +200,13 @@ Item {
                     blueRect.beginDrag = Qt.point(blueRect.x, blueRect.y);
                     child.x = blueRect.x
                     child.y = blueRect.y
-                    print(blueRect.x, blueRect.y)
                 }
                 onReleased: {
-                    print(blueRect.beginDrag)
                     blueRect.x = blueRect.beginDrag.x
                     blueRect.y = blueRect.beginDrag.y
-                    print('>>')
-                    print(blueRect.x, blueRect.y)
-                    print(child.parent.parent.x, child.parent.parent.y)
-                    print(mouse.x, mouse.y)
                     var l = mapToGlobal(mouse.x, mouse.y)
-                    print(l.x, l.y)
-                    print(window.x, window.y)
-                    print(l.x < window.x, l.x > window.width,
-                        l.y < window.y, l.y > window.height)
                     if(l.x < window.x || l.x > window.width + window.x ||
                         l.y < window.y || l.y > window.height + window.y) {
-
-                        console.log("X: " + window.x + " Y: " + window.y)
-                        console.log("X: " + window.x + " Y: " + window.y)
                         rectWindow.x = l.x
                         rectWindow.y = l.y
                         blueRect.state = "undocked"
@@ -231,9 +214,7 @@ Item {
                     }
                     blueRect.x = child.x
                     blueRect.y = child.y
-
                 }
-
             }
         }
     }
