@@ -8,9 +8,13 @@ Item {
     id: dock
     property var child
     property var childParent
+
+    state: "docked"
+
     Component.onCompleted: {
         childParent = child.parent
     }
+
     Window {
         id: rectWindow
         width: 100;
@@ -31,7 +35,7 @@ Item {
         }
 
         onClosing: {
-            blueRect.state = "docked"
+            dock.state = "docked"
         }
 
         Button {
@@ -124,6 +128,36 @@ Item {
         }
     }
 
+    states: [
+        State {
+            name: "undocked"
+            ParentChange { target: child; parent: greenRect; x: 0; y: 0 }
+            PropertyChanges {
+                target: blueRect
+                visible: false
+            }
+            PropertyChanges {
+                target: dock
+                Layout.maximumHeight : 0
+                Layout.maximumWidth : 0
+            }
+        },
+        State {
+            name: "docked"
+            ParentChange { target: child; parent: dock; x: 0; y: 0 }
+            PropertyChanges {
+                target: blueRect
+                visible: true
+                width: child.width
+                height: child.height
+                x: child.x; y: child.y;
+            }
+            PropertyChanges {
+                target: dock
+            }
+        }
+    ]
+
     Item {
         width: 200; height: 100
 
@@ -141,44 +175,12 @@ Item {
 
             property point beginDrag
 
-            states: [
-                State {
-                    name: "undocked"
-                    ParentChange { target: child; parent: greenRect; x: 0; y: 0 }
-                    PropertyChanges {
-                        target: blueRect
-                        visible: false
-                    }
-                    PropertyChanges {
-                        target: dock
-                        Layout.maximumHeight : 0
-                        Layout.maximumWidth : 0
-                    }
-                },
-                State {
-                    name: "docked"
-                    ParentChange { target: child; parent: dock; x: 0; y: 0 }
-                    PropertyChanges {
-                        target: blueRect
-                        visible: true
-                        width: child.width
-                        height: child.height
-                        x: child.x; y: child.y;
-                    }
-                    PropertyChanges {
-                        target: dock
-                        Layout.fillWidth : true
-                        Layout.fillHeight : true
-                    }
-                }
-            ]
-
             MouseArea {
                 anchors.fill: parent;
                 acceptedButtons: Qt.RightButton
                 onClicked: {
                     if(mouse.button & Qt.RightButton) {
-                        blueRect.state = "undocked"
+                        dock.state = "undocked"
                         rectWindow.visible = true
                     }
                 }
@@ -204,18 +206,60 @@ Item {
                 onReleased: {
                     blueRect.x = blueRect.beginDrag.x
                     blueRect.y = blueRect.beginDrag.y
+
+                    // Check if window have only one dock
+                    if (countDocks(childParent) < 2) {
+                        blueRect.x = child.x
+                        blueRect.y = child.y
+                        return;
+                    }
+
                     var l = mapToGlobal(mouse.x, mouse.y)
                     if(l.x < window.x || l.x > window.width + window.x ||
                         l.y < window.y || l.y > window.height + window.y) {
                         rectWindow.x = l.x
                         rectWindow.y = l.y
-                        blueRect.state = "undocked"
+                        dock.state = "undocked"
                         rectWindow.visible = true
                     }
+
                     blueRect.x = child.x
                     blueRect.y = child.y
                 }
             }
         }
+    }
+
+    function countDocks(item) {
+        if(item.parent != null) {
+            return countDocks(item.parent)
+        }
+        return countDocksInMaster(item, 0)
+    }
+
+    function getType(item) {
+        var name = String(item).split('(')[0]
+        if (name.indexOf("_QML") !== -1) {
+            name = name.split("_QML")[0]
+        }
+        return name
+    }
+
+    function countDocksInMaster(item, count) {
+        count = count === undefined ? 0 : count
+        if (getType(item) === "DockItem") {
+            if (item.state == 'docked') {
+                count++
+            }
+        }
+
+        var dockItem = null
+        for (var i = 0; i < item.children.length; i++) {
+            count = countDocksInMaster(item.children[i], count)
+            if (dockItem != null) {
+                return count
+            }
+        }
+        return count
     }
 }
