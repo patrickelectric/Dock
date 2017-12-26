@@ -8,6 +8,7 @@ Item {
     id: dock
     property var child
     property var childParent
+    property var title
 
     state: "docked"
 
@@ -40,8 +41,8 @@ Item {
 
         Button {
             iconSource:"ratio.png"
-            anchors.right: greenRect.right
-            anchors.bottom: greenRect.bottom
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
 
             style: ButtonStyle {
                 background: Rectangle {
@@ -69,10 +70,16 @@ Item {
             }
         }
 
+        Text {
+            text: title
+            anchors.left: parent.left
+            anchors.top: parent.top
+        }
+
         Button {
             iconSource:"move.png"
-            anchors.right: greenRect.right
-            anchors.top: greenRect.top
+            anchors.right: parent.right
+            anchors.top: parent.top
 
             style: ButtonStyle {
                 background: Rectangle {
@@ -106,8 +113,8 @@ Item {
 
         Button {
             iconSource:"dashboard.png"
-            anchors.left: greenRect.left
-            anchors.bottom: greenRect.bottom
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
 
             style: ButtonStyle {
                 background: Rectangle {
@@ -158,13 +165,15 @@ Item {
         }
     ]
 
+    Text {
+        text: title
+        z: dock.z+1
+        anchors.left: parent.left
+        anchors.top: parent.top
+    }
+
     Item {
         width: 200; height: 100
-
-        Rectangle {
-            id: redRect
-            anchors.fill: parent
-        }
 
         Rectangle {
             id: blueRect

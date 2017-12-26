@@ -22,6 +22,7 @@ ApplicationWindow {
 
             DockItem {
                 id: dockItemBlue
+                title: blueRect.color
                 child: blueRect
                 Layout.fillWidth: layout.itemWidth
                 Layout.fillHeight: true
@@ -34,6 +35,7 @@ ApplicationWindow {
 
             DockItem {
                 id: dockItemRed
+                title: redRect.color
                 child: redRect
                 Layout.fillWidth: layout.itemWidth
                 Layout.fillHeight: true
@@ -53,6 +55,7 @@ ApplicationWindow {
 
             DockItem {
                 id: dockItemGreen
+                title: greenRect.color
                 child: greenRect
                 Layout.fillWidth: layout.itemWidth
                 Layout.fillHeight: true
@@ -64,6 +67,7 @@ ApplicationWindow {
             }
             DockItem {
                 id: dockItemPink
+                title: pinkRect.color
                 child: pinkRect
                 Layout.fillWidth: layout.itemWidth
                 Layout.fillHeight: true
